@@ -139,18 +139,21 @@ fetch("https://opensheet.elk.sh/2PACX-1vTmmssQXxO9xwUvp5SZTJV8-GXyu81hrngng7Q8hC
 .then(response => response.json())
 .then(data => {
 
+  console.log(data); // for debugging
+
+  if (!data.length) return;
+
   const row = data[0];
 
-  document.getElementById("date").innerText = row["Date"] || "";
+  document.getElementById("date").innerText = row.Date || "";
   document.getElementById("morning").innerText = row["Morning Activity"] || "";
   document.getElementById("afternoon").innerText = row["Afternoon Activity"] || "";
-  document.getElementById("movie").innerText = row["Movie"] || "";
+  document.getElementById("movie").innerText = row.Movie || "";
   document.getElementById("reminder1").innerText = row["Reminder 1"] || "";
   document.getElementById("reminder2").innerText = row["Reminder 2"] || "";
   document.getElementById("urgent").innerText = row["Urgent Banner"] || "";
 
-})
-.catch(error => console.error("Data load error:", error));
+});
 </script>
 
 </body>
