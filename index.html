@@ -5,7 +5,7 @@
 <meta http-equiv="refresh" content="900">
 <title>Glenview Health Display</title>
 
-<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 
@@ -17,7 +17,7 @@ body{
   color:#2a3a94;
 }
 
-/* Background blobs */
+/* BACKGROUND BLOBS */
 
 .bg{
   position:fixed;
@@ -57,7 +57,7 @@ body{
   opacity:.35;
 }
 
-/* Logo Placeholder */
+/* LOGO PLACEHOLDER */
 
 .logo-placeholder{
   position:absolute;
@@ -67,7 +67,7 @@ body{
   height:120px;
 }
 
-/* Page System */
+/* PAGE SYSTEM */
 
 .container{
   padding:120px 140px;
@@ -83,16 +83,28 @@ body{
   display:block;
 }
 
-/* Headings */
+/* HEADINGS */
 
 .main-title{
   font-family:'League Spartan';
   font-weight:800;
   font-size:80px;
-  margin-bottom:60px;
+  margin-bottom:20px;
 }
 
-/* Cards */
+.sub-date{
+  font-family:'League Spartan';
+  font-weight:600;
+  font-size:40px;
+}
+
+/* PAGE 2 LAYOUT */
+
+.page2-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+}
 
 .card{
   background:#fffdf5;
@@ -112,28 +124,21 @@ body{
 .activity-text{
   font-family:'League Spartan';
   font-weight:700;
-  font-size:38px;
-}
-
-/* Page 1 Layout */
-
-.daily-layout{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:40px;
-}
-
-/* Page 2 */
-
-.reminder-big{
-  background:#fffdf5;
-  border-radius:30px;
-  padding:60px;
   font-size:36px;
+}
+
+.reminder-text{
+  font-size:28px;
   line-height:1.8;
 }
 
-/* Week View */
+.photo-placeholder{
+  background:#ffffff55;
+  border-radius:24px;
+  height:250px;
+}
+
+/* WEEK PAGE */
 
 .week-grid{
   display:grid;
@@ -168,7 +173,7 @@ body{
   color:#4b757d;
 }
 
-/* Urgent Banner */
+/* URGENT BANNER (UNCHANGED) */
 
 .banner{
   position:absolute;
@@ -213,34 +218,51 @@ body{
 
 <!-- PAGE 1 -->
 <div class="page active" id="page1">
-  <h1 class="main-title" id="date"></h1>
-
-  <div class="daily-layout">
-    <div class="card">
-      <div class="section-label">Morning</div>
-      <div class="activity-text" id="morning"></div>
-    </div>
-
-    <div class="card">
-      <div class="section-label">Afternoon</div>
-      <div class="activity-text" id="afternoon"></div>
-    </div>
-
-    <div class="card">
-      <div class="section-label">Movie</div>
-      <div class="activity-text" id="movie"></div>
-    </div>
-  </div>
+  <h1 class="main-title">Daily Agenda</h1>
+  <div class="sub-date" id="dateSmall"></div>
 </div>
 
 <!-- PAGE 2 -->
 <div class="page" id="page2">
-  <h1 class="main-title">Reminders</h1>
-  <div class="reminder-big">
-    <div id="reminder1"></div>
-    <br>
-    <div id="reminder2"></div>
+
+  <h1 class="main-title" id="dateLarge"></h1>
+
+  <div class="page2-layout">
+
+    <!-- LEFT -->
+    <div>
+      <div class="card">
+        <div class="section-label">Reminders</div>
+        <div class="reminder-text">
+          <div id="reminder1"></div>
+          <br>
+          <div id="reminder2"></div>
+        </div>
+      </div>
+
+      <div class="photo-placeholder"></div>
+    </div>
+
+    <!-- RIGHT -->
+    <div>
+      <div class="card">
+        <div class="section-label">Morning</div>
+        <div class="activity-text" id="morning"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-label">Afternoon</div>
+        <div class="activity-text" id="afternoon"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-label">Movie</div>
+        <div class="activity-text" id="movie"></div>
+      </div>
+    </div>
+
   </div>
+
 </div>
 
 <!-- PAGE 3 -->
@@ -269,7 +291,9 @@ function clean(v){
 
 const row = data[0];
 
-document.getElementById("date").innerText = clean(row.Date);
+document.getElementById("dateSmall").innerText = clean(row.Date);
+document.getElementById("dateLarge").innerText = clean(row.Date);
+
 document.getElementById("morning").innerText = clean(row["Morning Activity"]);
 document.getElementById("afternoon").innerText = clean(row["Afternoon Activity"]);
 document.getElementById("movie").innerText = clean(row.Movie);
@@ -280,7 +304,7 @@ document.getElementById("reminder2").innerText = "• " + clean(row["Reminder 2"
 const urgentText = clean(row["Urgent Banner"]);
 document.getElementById("urgent").innerText = urgentText ? "⚠ " + urgentText : "";
 
-/* Week Grid */
+/* WEEK GRID */
 const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 const grid = document.getElementById("weekGrid");
 
@@ -297,7 +321,8 @@ days.forEach(day=>{
 
 });
 
-/* HARD PAGE ROTATION */
+/* ROTATION */
+
 const pages = document.querySelectorAll(".page");
 let index = 0;
 
