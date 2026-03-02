@@ -135,20 +135,22 @@ body {
 </div>
 
 <script>
-fetch("https://api.allorigins.win/raw?url=https://docs.google.com/spreadsheets/d/e/2PACX-1vTmmssQXxO9xwUvp5SZTJV8-GXyu81hrngng7Q8hCdjrFTVW8ypHqbw0ShtHGpJr5jt5zHsZwq8whmK/pub?gid=0&single=true&output=csv")
-.then(response => response.text())
+fetch("https://opensheet.elk.sh/2PACX-1vTmmssQXxO9xwUvp5SZTJV8-GXyu81hrngng7Q8hCdjrFTVW8ypHqbw0ShtHGpJr5jt5zHsZwq8whmK/Sheet1")
+.then(response => response.json())
 .then(data => {
-  const rows = data.split("\n");
-  const cols = rows[1].split(",");
 
-  document.getElementById("date").innerText = cols[0] || "";
-  document.getElementById("morning").innerText = cols[1] || "";
-  document.getElementById("afternoon").innerText = cols[2] || "";
-  document.getElementById("movie").innerText = cols[3] || "";
-  document.getElementById("reminder1").innerText = cols[4] || "";
-  document.getElementById("reminder2").innerText = cols[5] || "";
-  document.getElementById("urgent").innerText = cols[6] || "";
-});
+  const row = data[0];
+
+  document.getElementById("date").innerText = row["Date"] || "";
+  document.getElementById("morning").innerText = row["Morning Activity"] || "";
+  document.getElementById("afternoon").innerText = row["Afternoon Activity"] || "";
+  document.getElementById("movie").innerText = row["Movie"] || "";
+  document.getElementById("reminder1").innerText = row["Reminder 1"] || "";
+  document.getElementById("reminder2").innerText = row["Reminder 2"] || "";
+  document.getElementById("urgent").innerText = row["Urgent Banner"] || "";
+
+})
+.catch(error => console.error("Data load error:", error));
 </script>
 
 </body>
