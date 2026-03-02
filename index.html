@@ -143,13 +143,30 @@ fetch("https://opensheet.elk.sh/19qGfblEVLezYvpctCS90aoj_5DOy9rrAbgcPBwVpHr0/She
 
   const row = data[0];
 
-document.getElementById("date").innerText = (row.Date || "").replace(/"/g, "");
-  document.getElementById("morning").innerText = row["Morning Activity"] || "";
-  document.getElementById("afternoon").innerText = row["Afternoon Activity"] || "";
-  document.getElementById("movie").innerText = row.Movie || "";
-  document.getElementById("reminder1").innerText = row["Reminder 1"] || "";
-  document.getElementById("reminder2").innerText = row["Reminder 2"] || "";
-  document.getElementById("urgent").innerText = row["Urgent Banner"] || "";
+  function setField(id, value) {
+    const el = document.getElementById(id);
+    if (!value || value.trim() === "") {
+      el.style.display = "none";
+    } else {
+      el.innerText = value.replace(/"/g, "");
+    }
+  }
+
+  setField("date", row.Date);
+  setField("morning", row["Morning Activity"]);
+  setField("afternoon", row["Afternoon Activity"]);
+  setField("movie", row.Movie);
+  setField("reminder1", row["Reminder 1"]);
+  setField("reminder2", row["Reminder 2"]);
+
+  const urgent = row["Urgent Banner"];
+  const banner = document.querySelector(".banner");
+
+  if (!urgent || urgent.trim() === "") {
+    banner.style.display = "none";
+  } else {
+    document.getElementById("urgent").innerText = urgent;
+  }
 
 })
 .catch(error => console.error("Data load error:", error));
