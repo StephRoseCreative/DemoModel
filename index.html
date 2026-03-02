@@ -72,9 +72,8 @@ body{
 */
 
 .container{
-  padding:80px 140px 40px 140px;
+  padding:120px 140px 40px 140px;
   box-sizing:border-box;
-  transform: translateY(-80px);
 }
 
 /* PAGE SYSTEM */
@@ -86,6 +85,12 @@ body{
 
 .page.active{
   display:block;
+}
+  /* Lift page 2 & 3 slightly so they clear banner */
+
+#page2,
+#page3{
+  transform: translateY(-60px);
 }
 
 /* PAGE 1 */
